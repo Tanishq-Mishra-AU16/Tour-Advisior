@@ -9,7 +9,7 @@ const tourSchema = new mongoose.Schema({
     required: [true, 'A tour must have a name'],
     unique: true,
     trim: true,
-    maxlength: [0, 'A tour name must have less or equal then 40 characters'],
+    maxlength: [40, 'A tour name must have less or equal then 40 characters'],
     minlength: [10, 'A tour name must have less or equal then 40 characters'],
   },
   slug: String,
@@ -162,14 +162,14 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
-tourSchema.pre(/^find/, function(next) {
-  this.populate({
-    path:'guides',
-  select:'__v -passwordChangedAt'
-});
+// tourSchema.pre(/^find/, function(next) {
+//   this.populate({
+//     path:'guides',
+//   select:'__v -passwordChangedAt'
+// });
 
-  next();
-})
+//   next();
+// })
 
 tourSchema.post(/^find/, function (docs, next) {
   console.log(`Query took ${Date.now() -this.start}milliseconds!`);
