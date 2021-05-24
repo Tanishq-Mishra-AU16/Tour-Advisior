@@ -60,10 +60,9 @@ exports.createUser = (req, res) => {
   });
 };
 
+exports.getUser = factory.getOne(User);
 exports.getAllUsers = factory.getAll(User);
 
-exports.getUser = factory.getOne(User);
-
-// Do Not Update passwords with this!
+// Do NOT update passwords with this!
 exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
