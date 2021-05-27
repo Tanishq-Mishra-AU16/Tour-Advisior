@@ -1,9 +1,11 @@
 /* eslint-disable */
+import keys from '../../config/keys';
+
 export const displayMap = locations => {
-  mapboxgl.accessToken = 'pk.eyJ1IjoidGFuaXNocW1pc2hyYTEiLCJhIjoiY2twMTB6dnkyMTg4OTJxbWNzMzhxaWppbCJ9.vxgdlVuvp-yca8eR2yh14A';
-    var map = new mapboxgl.Map({
+  mapboxgl.accessToken = keys.mapBoxAccessToken;
+  var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
+    style: 'mapbox://styles/rasedmia/ck3cmgrsx1qa61cpiuonp0dja',
     scrollZoom: false
     // center: [-118.113491, 34.111745],
     // zoom: 10,
