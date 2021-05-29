@@ -28,7 +28,7 @@ const users = JSON.parse(
     fs.readFileSync(`${__dirname}/users.json`, 'utf-8')
   );
 const review = JSON.parse(
-    fs.readFileSync(`${__dirname}/review.json`, 'utf-8')
+    fs.readFileSync(`${__dirname}/reviews.json`, 'utf-8')
   );
 // console.log(tours)  
 
