@@ -1,36 +1,56 @@
-/* eslint-disable */
-import axios from 'axios';
-import { showAlert } from './alerts';
-export const login = async (email, password) => {
-  try {
-    const res = await axios({
-      method: 'POST',
-      url: '/api/v1/users/login',
-      data: {
-        email,
-        password
-      }
-    });
+let signInForm = document.querySelector('.sign-in-form');
+let registerForm = document.querySelector('.register-form');
 
-    if (res.data.status === 'success') {
-      showAlert('success', 'Logged in successfully!');
-      window.setTimeout(() => {
-        location.assign('/');
-      }, 1500);
+signInForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    let email = document.getElementById('sign-in-email').value;
+    let password = document.getElementById('sign-in-password').value;
+    fetch('http://localhost:3000/users/login', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email, password})
+        //JS understands that the two keys email and password have to be created as their values
+        //JS'll set the values of the variable email and the variable password
+    }).then((res) => {
+        if(res.status === 400){
+            throw new Error();
+        }
+        return res.json();
+    }).then((data) =>{
+        window.location.href = data.redirectURL; //redirectURL: '/admin' from users.js (routes)
+    }).catch(() => alert('Wrong email or password!'));
+})
+
+registerForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    let email = document.getElementById('register-email').value;
+    let password = document.getElementById('register-password').value;
+    let rePassword = document.getElementById('register-re-enter-password').value;
+    if(password !== rePassword){
+        return;
     }
-  } catch (err) {
-    showAlert('error', err.response.data.message);
-  }
-};
+    fetch('http://localhost:3000/users/register', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email, password})
+    }).then((res) => res.text())
+    .then((data) => alert(data));
+    
+})
 
-export const logout = async () => {
-  try {
-    const res = await axios({
-      method: 'GET',
-      url: '/api/v1/users/logout'
-    });
-    if (res.data.status === 'success') location.reload(true);
-  } catch (err) {
-    showAlert('error', 'Error logging out! Try again.');
-  }
-};
+
+const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('container');
+
+signUpButton.addEventListener('click', () => {
+	container.classList.add("right-panel-active");
+});
+
+signInButton.addEventListener('click', () => {
+	container.classList.remove("right-panel-active");
+});
